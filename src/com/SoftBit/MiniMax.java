@@ -61,7 +61,6 @@ public class MiniMax {
 
         List<HashMap<String, Integer>> moves = new ArrayList<>();
 
-        // цикл по доступным клеткам
         for(int i = 0; i < emptyFieldsIndex.size(); i++){
 
             //create an object for each and store the index of that spot
@@ -69,10 +68,8 @@ public class MiniMax {
 
             move.put( "index", Character.getNumericValue( board[emptyFieldsIndex.get(i)] ) );
 
-            // совершить ход за текущего игрока
             board[emptyFieldsIndex.get(i)] = player;
 
-            //получить очки, заработанные после вызова минимакса от противника текущего игрока
 
             if (player == comp){
                 int result = minimax(board, human).get("score");
@@ -83,14 +80,11 @@ public class MiniMax {
                 move.put("score", result);
             }
 
-            // очистить клетку
             board[emptyFieldsIndex.get(i)] = Character.forDigit(move.get("index"), 10);
 
-            // положить объект в массив
             moves.add(move);
         }
 
-        // если это ход ИИ, пройти циклом по ходам и выбрать ход с наибольшим количеством очков
         int bestMove = 0;
         if(player == comp){
             int bestScore = moves.get(0).get("score");
@@ -101,7 +95,6 @@ public class MiniMax {
                 }
             }
         }else{
-        // иначе пройти циклом по ходам и выбрать ход с наименьшим количеством очков
             int bestScore = moves.get(0).get("score");
             for(int i = 1; i < moves.size(); i++){
                 if(moves.get(i).get("score") < bestScore){
@@ -111,7 +104,6 @@ public class MiniMax {
             }
         }
 
-        // вернуть выбранный ход (объект) из массива ходов
         return moves.get(bestMove);
     }
 }
